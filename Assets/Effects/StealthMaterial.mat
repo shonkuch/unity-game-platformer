@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: StealthMaterial
+  m_Shader: {fileID: 4800000, guid: 6a3b8fd6eed9d144e8c13f375e00ffb1, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Blend: 1
+    - _BlendJitter: 0.016
+    - _BlendJitterSpeed: 3
+    - _CellFlickerAmount: 0.5
+    - _CellFlickerRate: 12
+    - _ChromaticSplit: 0.0015
+    - _DistortScale: 3
+    - _DistortSpeed: 1.5
+    - _DistortStrength: 0.004
+    - _HexScale: 8
+    - _KeepEdges: 0
+    - _Phase: 0
+    - _PhaseCellWeight: 0.6
+    - _PhaseEdgeWidth: 0.15
+    - _PhaseNoiseScale: 6
+    - _SeamPulseSpeed: 2
+    - _SeamTintAmount: 0.6
+    - _SeamWidth: 0.04
+    - _WobbleFrequency: 10
+    - _WobbleSpeed: 4
+    - _WobbleStrength: 0.003
+    m_Colors:
+    - _BackgroundTint: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _PhaseEdgeColor: {r: 0.4, g: 1.6, b: 2.4, a: 1}
+    - _SeamTint: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
