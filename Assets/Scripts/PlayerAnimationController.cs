@@ -9,6 +9,7 @@ public class PlayerAnimationController : CharacterAnimationController<PlayerStat
     private readonly int _run = Animator.StringToHash("Player_Run");
     private readonly int _jump = Animator.StringToHash("Player_Jump");
     private readonly int _crouch = Animator.StringToHash("Player_Crouch");
+    private readonly int _crawl = Animator.StringToHash("Player_Crawl");
     private readonly int _wallGrab = Animator.StringToHash("Player_WallGrab");
 
     private void Awake()
@@ -20,9 +21,10 @@ public class PlayerAnimationController : CharacterAnimationController<PlayerStat
     {
         if (_animator == null) return;
 
-        if (_currentState == state) return;
-
-        Debug.Log($"Аніматор перемикає: {_currentState} ---> {state}");
+        if (_currentState == PlayerStateId.WallGrab && state == PlayerStateId.Fall)
+        {
+            return;
+        }
 
         _currentState = state;
 
@@ -39,7 +41,14 @@ public class PlayerAnimationController : CharacterAnimationController<PlayerStat
                 _animator.Play(_jump);
                 break;
             case PlayerStateId.Crouch:
-                _animator.Play(_crouch);
+                if (value != 0)
+                {
+                    _animator.Play(_crawl);
+                }
+                else
+                {
+                    _animator.Play(_crouch);
+                }
                 break;
             case PlayerStateId.WallGrab: 
                 _animator.Play(_wallGrab);

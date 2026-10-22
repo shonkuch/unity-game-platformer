@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1102 &-5529453842185073419
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Player_Crawl
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: efe9369520dfc4ce3adb3e54a1673979, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-4372114090500712095
 AnimatorState:
   serializedVersion: 6
@@ -36,9 +62,6 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -418431885436408095}
-    m_Position: {x: 272, y: 57, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -4372114090500712095}
     m_Position: {x: 294, y: 190, z: 0}
   - serializedVersion: 1
@@ -49,7 +72,7 @@ AnimatorStateMachine:
     m_Position: {x: 52.63083, y: 289.2848, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3467316020191920102}
-    m_Position: {x: 87.63083, y: 354.2848, z: 0}
+    m_Position: {x: 90, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4048904471486211565}
     m_Position: {x: 122.63083, y: 419.2848, z: 0}
@@ -59,6 +82,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -1000528123499693568}
     m_Position: {x: 225, y: 615, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -5529453842185073419}
+    m_Position: {x: 260, y: 680, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -90,32 +116,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: d992ec572785b4721b5d2f9a7141bf69, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-418431885436408095
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Player_Climb
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8d5a9df02b3e3461eb3f47ba47043112, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

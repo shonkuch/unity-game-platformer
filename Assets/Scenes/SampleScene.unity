@@ -831,7 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrouchState
   crouchSpeedMultiplier: 0.4
   crouchHeightMultiplier: 0.5
-  crouchSpriteScaleMultiplier: 0.6
+  crouchSpriteScaleMultiplier: 1
 --- !u!114 &343729555
 MonoBehaviour:
   m_ObjectHideFlags: 0

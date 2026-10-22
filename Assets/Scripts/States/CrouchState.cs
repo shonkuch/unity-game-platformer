@@ -11,8 +11,7 @@ public class CrouchState : MovingState
     [Tooltip("Crouched collider height as a fraction of the standing height; the feet stay in place.")]
     [SerializeField, Range(0.1f, 1f)] private float crouchHeightMultiplier = 0.5f;
     [Tooltip("Crouched sprite Y scale as a fraction of the standing scale; the sprite's bottom stays in place.")]
-    [SerializeField, Range(0.1f, 1f)] private float crouchSpriteScaleMultiplier = 0.6f;
-
+ [SerializeField, Range(0.1f, 1f)] private float crouchSpriteScaleMultiplier = 1;
     private CapsuleCollider2D _body;
     private Transform _sprite;
     private Vector2 _standingBodySize;
