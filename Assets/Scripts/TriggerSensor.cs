@@ -10,8 +10,23 @@ public class TriggerSensor : MonoBehaviour
 
     private readonly HashSet<Collider2D> _overlaps = new();
 
-    public bool IsTouching => _overlaps.Count > 0;
+    public bool IsTouching => _nonTriggerOverlaps().Count > 0;
 
+    private HashSet<Collider2D> _nonTriggerOverlaps()
+    {
+        HashSet<Collider2D> overlaps = new();
+        
+        foreach (var overlap in _overlaps)
+        {
+            if (!overlap.isTrigger)
+            {
+                overlaps.Add(overlap);
+            }
+        }
+        
+        return overlaps;
+    }
+    
     // Fills results with the current overlaps (cleared first).
     public void GetOverlaps(List<Collider2D> results)
     {

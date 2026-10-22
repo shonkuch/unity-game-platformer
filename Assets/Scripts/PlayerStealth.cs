@@ -55,12 +55,14 @@ public class PlayerStealth : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_damageable != null) _damageable.Damaged += OnDamaged;
+        if (_damageable != null) 
+            _damageable.damaged.AddListener(OnDamaged);
     }
 
     private void OnDisable()
     {
-        if (_damageable != null) _damageable.Damaged -= OnDamaged;
+        if (_damageable != null) 
+            _damageable.damaged.RemoveListener(OnDamaged);
 
         _phase = Phase.Off;
         _wantsStealth = false;

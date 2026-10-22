@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 // Hit points for anything that can take damage: the player, enemies, destructible environment.
 // Flashes the sprite toward a tint and plays hit particles on every hit; disables its hitboxes on death.
@@ -20,8 +22,8 @@ public class Damageable : MonoBehaviour
     [SerializeField] private AnimationCurve flashCurve = new(new Keyframe(0f, 1f), new Keyframe(0.25f, 0f));
 
     // Damage amount taken.
-    public event Action<int> Damaged;
-    public event Action Died;
+    public UnityEvent <int> damaged;
+    public UnityEvent  died;
 
     public int MaxHp => maxHp;
     public int Hp { get; private set; }
@@ -80,12 +82,12 @@ public class Damageable : MonoBehaviour
 
         if (hitParticles != null) hitParticles.Play();
 
-        Damaged?.Invoke(amount);
+        damaged?.Invoke(Hp);
         if (!IsDead) return;
 
         foreach (Collider2D hitbox in hitboxes)
             if (hitbox != null) hitbox.enabled = false;
 
-        Died?.Invoke();
+        died?.Invoke();
     }
 }

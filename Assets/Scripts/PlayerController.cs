@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 // Runs the player state machine (priority = PlayerStateId value).
 // Holds what the states share: sensors, sprite, horizontal tuning, facing.
