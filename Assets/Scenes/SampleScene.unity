@@ -2161,7 +2161,7 @@ GameObject:
   - component: {fileID: 1078839564}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3455,6 +3455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3269d7d573c1e467eaf89a614d7359c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DroneAnimationController
+  animator: {fileID: 0}
 --- !u!114 &1603775734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3469,10 +3470,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   facingPivot: {fileID: 1695772384}
   visionSensor: {fileID: 1968235797}
-  eye: {fileID: 117910579}
+  eye: {fileID: 1968235799}
   sightBlockers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   acceleration: 30
   deceleration: 40
 --- !u!114 &1603775735
@@ -3537,7 +3538,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -3576,6 +3577,8 @@ GameObject:
   - component: {fileID: 1695772384}
   - component: {fileID: 1695772385}
   - component: {fileID: 1695772386}
+  - component: {fileID: 1695772388}
+  - component: {fileID: 1695772387}
   m_Layer: 0
   m_Name: EnemyVisuals
   m_TagString: Untagged
@@ -3593,7 +3596,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.43, y: 0.32, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 117910579}
@@ -3697,7 +3700,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.11, y: 0.104}
+    oldSize: {x: 1.71875, y: 1.625}
     newSize: {x: 0.11, y: 0.104}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3705,6 +3708,41 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.11, y: 0.14}
   m_EdgeRadius: 0
+--- !u!114 &1695772387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695772383}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3269d7d573c1e467eaf89a614d7359c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DroneAnimationController
+  animator: {fileID: 1695772388}
+--- !u!95 &1695772388
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695772383}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1ef978ce7b7c4213a8fb8394605ff5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1747825231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4216,7 +4254,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -4.09, y: 0}
+  m_Offset: {x: 31.323547, y: 2.529541}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4226,7 +4264,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 7.82, y: 1}
+  m_Size: {x: 373.5188, y: 72.549774}
   m_EdgeRadius: 0
 --- !u!4 &1968235799
 Transform:

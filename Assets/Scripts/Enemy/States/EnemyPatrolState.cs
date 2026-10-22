@@ -34,10 +34,12 @@ public class EnemyPatrolState : EnemyStateBase
         _points = new Vector2[] { pointA.position, pointB.position };
     }
 
-    public override bool CanBeActivated(EnemyStateId? currentState) => _points != null && Time.time >= _resumeAt;
+    public override bool CanBeActivated(EnemyStateId? currentState) => _points != null && _points.Length >= 2 && Time.time >= _resumeAt;
 
     public override void UpdateState()
     {
+        if (_points == null || _points.Length < 2) return;
+
         float dx = _points[_targetIndex].x - Rigidbody.position.x;
 
         if (Mathf.Abs(dx) <= arrivalDistance)
@@ -63,7 +65,9 @@ public class EnemyPatrolState : EnemyStateBase
     private void OnDrawGizmos()
     {
         Vector2 a, b;
-        if (_points != null)
+
+        // Safety check to prevent IndexOutOfRangeException
+        if (_points != null && _points.Length >= 2)
         {
             a = _points[0];
             b = _points[1];
@@ -83,7 +87,7 @@ public class EnemyPatrolState : EnemyStateBase
         Gizmos.DrawWireSphere(a, 0.15f);
         Gizmos.DrawWireSphere(b, 0.15f);
 
-        if (_points == null) return;
+        if (_points == null || _points.Length < 2 || _targetIndex < 0 || _targetIndex >= _points.Length) return;
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(_points[_targetIndex], 0.25f);
