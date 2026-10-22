@@ -7,7 +7,7 @@ public class PlayerInputBinder : MonoBehaviour
     [SerializeField] private KeyCode[] rightKeys = { KeyCode.D, KeyCode.RightArrow };
     [SerializeField] private KeyCode[] jumpKeys = { KeyCode.Space, KeyCode.W, KeyCode.UpArrow };
     [SerializeField] private KeyCode[] crouchKeys = { KeyCode.S, KeyCode.DownArrow };
-    [SerializeField] private KeyCode[] attackKeys = { KeyCode.J, KeyCode.Mouse0 };
+    [SerializeField] private KeyCode[] attackKeys = { KeyCode.R };
     [Tooltip("How long (s) a jump press stays valid, so pressing just before landing still jumps.")]
     [SerializeField, Min(0.02f)] private float jumpBufferTime = 0.12f;
     [Tooltip("How long (s) an attack press stays valid, so pressing just before an attack can start still attacks.")]
