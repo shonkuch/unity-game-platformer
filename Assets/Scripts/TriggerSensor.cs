@@ -41,6 +41,7 @@ public class TriggerSensor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other);
         if ((detectLayers.value & (1 << other.gameObject.layer)) != 0)
             _overlaps.Add(other);
     }
