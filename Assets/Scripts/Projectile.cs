@@ -10,10 +10,16 @@ public class Projectile : MonoBehaviour
     [SerializeField, Min(0.1f)] private float lifetime = 3f;
     [Tooltip("Layers it reacts to; colliders on other layers are passed through.")]
     [SerializeField] private LayerMask hitLayers = ~0;
+    [Tooltip("Optional looping child (World simulation space); left behind to fade out when the projectile ends.")]
+    [SerializeField] private ParticleSystem trail;
+    [Tooltip("Optional prefab spawned where it hits something (not when its lifetime runs out). " +
+             "Authored for a projectile flying right; spawned with the projectile's rotation.")]
+    [SerializeField] private ParticleSystem impactEffect;
 
     private Rigidbody2D _rigidbody;
     private Damageable _shooter;
     private bool _spent;
+    private float _expiresAt = float.PositiveInfinity;
 
     private void Reset()
     {
@@ -37,7 +43,12 @@ public class Projectile : MonoBehaviour
         _shooter = shooter;
         _rigidbody.linearVelocity = Vector2.right * (direction * speed);
         if (direction < 0) transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-        Destroy(gameObject, lifetime);
+        _expiresAt = Time.time + lifetime;
+    }
+
+    private void Update()
+    {
+        if (!_spent && Time.time >= _expiresAt) End();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -50,7 +61,14 @@ public class Projectile : MonoBehaviour
         if (target != null && target.IsHitbox(other)) target.TakeDamage(damage);
         else if (other.isTrigger) return;
 
+        Vfx.Spawn(impactEffect, transform.position, transform.rotation);
+        End();
+    }
+
+    private void End()
+    {
         _spent = true;
+        Vfx.Release(trail);
         Destroy(gameObject);
     }
 }
