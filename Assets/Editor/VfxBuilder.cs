@@ -60,6 +60,11 @@ public static class VfxBuilder
     private static readonly Color Green = Hex("88d858");
     private static readonly Color Jade = Hex("38a070");
     private static readonly Color Ice = Hex("b8f8f8");
+    // Cyan plasma: the drone's shot and the player's punch spark, sampled from their sprites.
+    private static readonly Color Plasma = Hex("04f6ff");
+    private static readonly Color PlasmaLight = Hex("58feff");
+    private static readonly Color PlasmaDeep = Hex("0096f8");
+    private static readonly Color PlasmaDark = Hex("1848a8");
 
     private static class Names
     {
@@ -399,11 +404,11 @@ public static class VfxBuilder
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
             Burst(ps, 1);
             Sheet(ps, m.SlashFrames);
-            ColorOverLife(ps, Yellow, Orange, 1f, 0.85f);
+            ColorOverLife(ps, PlasmaLight, PlasmaDeep, 1f, 0.85f);
             GetRenderer(ps).alignment = ParticleSystemRenderSpace.Local;
 
             ParticleSystem sparks = NewSystem("Sparks", ps.transform, m.GlowPixel, Front);
-            Main(sparks, 0.1f, 0.2f, 3f, 5f, Px, 2 * Px, Yellow, White, 0f);
+            Main(sparks, 0.1f, 0.2f, 3f, 5f, Px, 2 * Px, PlasmaLight, White, 0f);
             Burst(sparks, 5);
             Cone(sparks, 35f, 0.1f, new Vector3(0f, 90f, 0f));
             Stretch(sparks);
@@ -436,11 +441,11 @@ public static class VfxBuilder
             Main(ps, 0.08f, 0.08f, 0f, 0f, 0.45f, 0.45f, White, White, 0f);
             Burst(ps, 1);
             Sheet(ps, 4);
-            ColorOverLife(ps, HotYellow, Red, 1f, 0f);
+            ColorOverLife(ps, Ice, PlasmaDeep, 1f, 0f);
             GetRenderer(ps).alignment = ParticleSystemRenderSpace.Local;
 
             ParticleSystem sparks = NewSystem("Sparks", ps.transform, m.GlowPixel, Front);
-            Main(sparks, 0.08f, 0.14f, 3f, 5f, Px, Px, Amber, Red, 0f);
+            Main(sparks, 0.08f, 0.14f, 3f, 5f, Px, Px, Plasma, PlasmaDeep, 0f);
             Burst(sparks, 3);
             Cone(sparks, 20f, 0f, new Vector3(0f, 90f, 0f));
             Stretch(sparks);
@@ -451,13 +456,13 @@ public static class VfxBuilder
         Save(Names.ProjectileTrail, () =>
         {
             ParticleSystem ps = NewSystem(Names.ProjectileTrail, null, m.GlowPixel, Front);
-            Main(ps, 0.15f, 0.25f, 0f, 0f, Px, 2 * Px, Amber, Red, 0f);
+            Main(ps, 0.15f, 0.25f, 0f, 0f, Px, 2 * Px, Plasma, PlasmaDeep, 0f);
             ParticleSystem.MainModule main = ps.main;
             main.loop = true;
             main.playOnAwake = true;
             ParticleSystem.EmissionModule emission = ps.emission;
             emission.rateOverDistance = 24f;
-            ColorOverLife(ps, Amber, Crimson, 1f, 0f);
+            ColorOverLife(ps, Plasma, PlasmaDark, 1f, 0f);
             Shrink(ps);
             return ps;
         });
@@ -469,10 +474,10 @@ public static class VfxBuilder
             Main(ps, 0.1f, 0.1f, 0f, 0f, 0.5f, 0.5f, White, White, 0f);
             Burst(ps, 1);
             Sheet(ps, 4);
-            ColorOverLife(ps, HotYellow, Red, 1f, 0f);
+            ColorOverLife(ps, Ice, PlasmaDeep, 1f, 0f);
 
             ParticleSystem sparks = NewSystem("Sparks", ps.transform, m.GlowPixel, Front);
-            Main(sparks, 0.1f, 0.2f, 2f, 5f, Px, Px, Amber, Red, 0f);
+            Main(sparks, 0.1f, 0.2f, 2f, 5f, Px, Px, Plasma, PlasmaDeep, 0f);
             Burst(sparks, 6);
             Cone(sparks, 50f, 0f, new Vector3(0f, -90f, 0f));
             Stretch(sparks);

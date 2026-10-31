@@ -22,8 +22,9 @@ public class WallGrabState : StationaryState
         if (currentState == Id)
             return Controller.IsTouchingWall(Side) && !Input.JumpBuffered && Input.MoveAxis * Side >= 0f;
 
-        // Auto-grab only on the way down, so jumps next to a wall still rise.
-        if (Rigidbody.linearVelocity.y > 0f) return false;
+        // Auto-grab only on the way down, so jumps next to a wall still rise. Not while bumping a ceiling either:
+        // the head stops there with no vertical speed, which would otherwise latch a grab in mid-air.
+        if (Rigidbody.linearVelocity.y > 0f || Controller.IsTouchingCeiling) return false;
 
         if (CanGrab(-1)) Side = -1;
         else if (CanGrab(1)) Side = 1;

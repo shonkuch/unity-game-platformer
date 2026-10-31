@@ -14,7 +14,7 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private ParticleSystem run;
     [Tooltip("Played on starting a wall grab and on a wall jump. Place it at the right wall; it is mirrored for the left wall.")]
     [SerializeField] private ParticleSystem wallGrab;
-    [Tooltip("Played when an attack starts. Place it for facing right; it is mirrored when facing left.")]
+    [Tooltip("Played on the attack's strike frame (AttackState hit delay). Place it for facing right; it is mirrored when facing left.")]
     [SerializeField] private ParticleSystem attack;
     [Tooltip("Played on starting a crouch, placed at the feet.")]
     [SerializeField] private ParticleSystem crouch;

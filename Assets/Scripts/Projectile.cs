@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private Damageable _shooter;
+    private float _scale = 1f;
     private bool _spent;
     private float _expiresAt = float.PositiveInfinity;
 
@@ -37,10 +38,17 @@ public class Projectile : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // direction: -1 left, 1 right. shooter may be null.
-    public void Launch(int direction, Damageable shooter)
+    // direction: -1 left, 1 right. shooter may be null. scale multiplies its size: sprite, collider, trail and impact.
+    public void Launch(int direction, Damageable shooter, float scale = 1f)
     {
         _shooter = shooter;
+        _scale = scale;
+        if (!Mathf.Approximately(scale, 1f))
+        {
+            transform.localScale *= scale;
+            Vfx.FollowHierarchyScale(trail);
+        }
+
         _rigidbody.linearVelocity = Vector2.right * (direction * speed);
         if (direction < 0) transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         _expiresAt = Time.time + lifetime;
@@ -61,7 +69,7 @@ public class Projectile : MonoBehaviour
         if (target != null && target.IsHitbox(other)) target.TakeDamage(damage);
         else if (other.isTrigger) return;
 
-        Vfx.Spawn(impactEffect, transform.position, transform.rotation);
+        Vfx.Spawn(impactEffect, transform.position, transform.rotation, _scale);
         End();
     }
 
