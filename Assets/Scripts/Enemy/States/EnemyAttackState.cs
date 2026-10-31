@@ -9,6 +9,8 @@ public class EnemyAttackState : EnemyStateBase
     [SerializeField] private Projectile projectilePrefab;
     [Tooltip("Spawn point; a child of the facing pivot so it flips with the enemy.")]
     [SerializeField] private Transform muzzle;
+    [Tooltip("Optional child of the muzzle, played on every shot.")]
+    [SerializeField] private ParticleSystem muzzleFlash;
     [Tooltip("Time (s) between shots.")]
     [SerializeField, Min(0.05f)] private float fireInterval = 1f;
     [Tooltip("Time (s) from spotting the target to the first shot.")]
@@ -64,5 +66,6 @@ public class EnemyAttackState : EnemyStateBase
 
         Projectile projectile = Instantiate(projectilePrefab, muzzle.position, Quaternion.identity);
         projectile.Launch(Controller.Facing, Controller.Damageable);
+        if (muzzleFlash != null) muzzleFlash.Play();
     }
 }

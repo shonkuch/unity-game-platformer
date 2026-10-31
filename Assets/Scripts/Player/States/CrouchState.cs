@@ -48,6 +48,7 @@ public class CrouchState : MovingState
     {
         base.EnterState();
         SetCrouching(true);
+        if (Controller.Effects != null) Controller.Effects.PlayCrouch();
     }
 
     public override void EndState()

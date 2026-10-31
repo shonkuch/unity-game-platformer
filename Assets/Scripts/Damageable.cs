@@ -4,7 +4,8 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 // Hit points for anything that can take damage: the player, enemies, destructible environment.
-// Flashes the sprite toward a tint and plays hit particles on every hit; disables its hitboxes on death.
+// Flashes the sprite toward a tint and plays hit particles on every hit; disables its hitboxes and spawns
+// the death effect on death.
 // What else death means is up to whoever listens to Died.
 [DisallowMultipleComponent]
 public class Damageable : MonoBehaviour
@@ -15,6 +16,8 @@ public class Damageable : MonoBehaviour
     [SerializeField] private Collider2D[] hitboxes = Array.Empty<Collider2D>();
     [Tooltip("Optional child particle system played on every hit.")]
     [SerializeField] private ParticleSystem hitParticles;
+    [Tooltip("Optional prefab spawned on death at the sprite's center (or this object's position); outlives the object.")]
+    [SerializeField] private ParticleSystem deathEffect;
     [Tooltip("Optional; tinted on every hit.")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color flashColor = Color.red;
@@ -87,6 +90,9 @@ public class Damageable : MonoBehaviour
 
         foreach (Collider2D hitbox in hitboxes)
             if (hitbox != null) hitbox.enabled = false;
+
+        Vector3 center = spriteRenderer != null ? spriteRenderer.bounds.center : transform.position;
+        Vfx.Spawn(deathEffect, center, Quaternion.identity);
 
         died?.Invoke();
     }

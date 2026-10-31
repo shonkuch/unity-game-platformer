@@ -15,6 +15,8 @@ public class JumpState : MovingState
     private WallGrabState _wallGrab;
     private float _jumpTime;
     private int _pendingBoostDirection;
+    // Wall side of a pending wall jump (-1 left, 1 right), 0 for a ground jump.
+    private int _pendingWallSide;
 
     public override PlayerStateId Id => PlayerStateId.Jump;
     public override int AnimationValue => DirectionOf(Rigidbody.linearVelocity.y);
@@ -35,6 +37,7 @@ public class JumpState : MovingState
 
         if (currentState == PlayerStateId.WallGrab)
         {
+            _pendingWallSide = _wallGrab.Side;
             _pendingBoostDirection = -_wallGrab.Side;
             return true;
         }
@@ -43,6 +46,7 @@ public class JumpState : MovingState
         if (!Controller.IsGrounded || (currentState == PlayerStateId.Crouch && Controller.IsTouchingCeiling))
             return false;
 
+        _pendingWallSide = 0;
         _pendingBoostDirection = DirectionOf(Input.MoveAxis);
         return true;
     }
@@ -53,6 +57,10 @@ public class JumpState : MovingState
         Input.ConsumeJump();
         _jumpTime = 0f;
         if (_pendingBoostDirection != 0) StartBoost(_pendingBoostDirection);
+
+        if (Controller.Effects == null) return;
+        if (_pendingWallSide != 0) Controller.Effects.PlayWallGrab(_pendingWallSide);
+        else Controller.Effects.PlayJump();
     }
 
     public override void EndState()
