@@ -140,11 +140,11 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 520
-        height: 793
+        width: 535
+        height: 710
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 60, y: 13, z: 0, w: 5}
       customData: 
       outline: []
       physicsShape: []
@@ -161,9 +161,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 673
-        y: 37
-        width: 511
-        height: 679
+        y: 21
+        width: 535
+        height: 710
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,8 +184,8 @@ TextureImporter:
         serializedVersion: 2
         x: 1276
         y: 14
-        width: 494
-        height: 530
+        width: 535
+        height: 710
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,10 +204,10 @@ TextureImporter:
       name: drone_move_3
       rect:
         serializedVersion: 2
-        x: 1873
-        y: 0
-        width: 527
-        height: 793
+        x: 1842
+        y: 4
+        width: 535
+        height: 710
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

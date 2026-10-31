@@ -11,6 +11,8 @@ public class PlayerAnimationController : CharacterAnimationController<PlayerStat
     private readonly int _crouch = Animator.StringToHash("Player_Crouch");
     private readonly int _crawl = Animator.StringToHash("Player_Crawl");
     private readonly int _wallGrab = Animator.StringToHash("Player_WallGrab");
+    private readonly int _death = Animator.StringToHash("Player_Death");
+    private readonly int _attack = Animator.StringToHash("Player_Attack");
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class PlayerAnimationController : CharacterAnimationController<PlayerStat
     {
         if (_animator == null) return;
 
-        if (_currentState == PlayerStateId.WallGrab && state == PlayerStateId.Fall)
+        if (_currentState == PlayerStateId.Death) 
         {
             return;
         }
@@ -52,6 +54,12 @@ public class PlayerAnimationController : CharacterAnimationController<PlayerStat
                 break;
             case PlayerStateId.WallGrab: 
                 _animator.Play(_wallGrab);
+                break;
+            case PlayerStateId.Death: 
+                _animator.Play(_death);
+                break;
+            case PlayerStateId.Attack: 
+                _animator.Play(_attack);
                 break;
         }
     }
