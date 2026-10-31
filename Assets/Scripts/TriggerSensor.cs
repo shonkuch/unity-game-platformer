@@ -1,58 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Tracks colliders on the given layers that overlap this GameObject's trigger collider.
-// Lives on a child of the player so its trigger events come from the player's Rigidbody2D.
+// Reports colliders on the given layers that overlap this GameObject's trigger collider, ignoring colliders on the
+// same Rigidbody2D. Queried live from the collider's pose after the last physics step rather than tracked through
+// trigger enter/exit events, so it releases on the first step it stops overlapping.
 [RequireComponent(typeof(Collider2D))]
 public class TriggerSensor : MonoBehaviour
 {
     [SerializeField] private LayerMask detectLayers = ~0;
 
-    private readonly HashSet<Collider2D> _overlaps = new();
+    private readonly List<Collider2D> _results = new();
+    private Collider2D _collider;
+    private ContactFilter2D _solidFilter;
+    private ContactFilter2D _anyFilter;
 
-    public bool IsTouching => _nonTriggerOverlaps().Count > 0;
+    // Whether a solid (non-trigger) collider overlaps the sensor.
+    public bool IsTouching => Query(_solidFilter, _results) > 0;
 
-    private HashSet<Collider2D> _nonTriggerOverlaps()
-    {
-        HashSet<Collider2D> overlaps = new();
-        
-        foreach (var overlap in _overlaps)
-        {
-            if (!overlap.isTrigger)
-            {
-                overlaps.Add(overlap);
-            }
-        }
-        
-        return overlaps;
-    }
-    
-    // Fills results with the current overlaps (cleared first).
-    public void GetOverlaps(List<Collider2D> results)
-    {
-        results.Clear();
-        results.AddRange(_overlaps);
-    }
+    // Fills results with the current overlaps, triggers included (cleared first).
+    public void GetOverlaps(List<Collider2D> results) => Query(_anyFilter, results);
 
     private void Reset()
     {
         GetComponent<Collider2D>().isTrigger = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Awake()
     {
-        if ((detectLayers.value & (1 << other.gameObject.layer)) != 0)
-            _overlaps.Add(other);
+        _collider = GetComponent<Collider2D>();
+        _solidFilter = new ContactFilter2D { useTriggers = false };
+        _solidFilter.SetLayerMask(detectLayers);
+        _anyFilter = new ContactFilter2D { useTriggers = true };
+        _anyFilter.SetLayerMask(detectLayers);
     }
 
-    // Also fires for colliders that get disabled or destroyed (Physics2D "Callbacks On Disable" is on).
-    private void OnTriggerExit2D(Collider2D other)
+    private int Query(ContactFilter2D filter, List<Collider2D> results)
     {
-        _overlaps.Remove(other);
-    }
+        results.Clear();
+        if (!isActiveAndEnabled || !_collider.enabled) return 0;
 
-    private void OnDisable()
-    {
-        _overlaps.Clear();
+        _collider.Overlap(filter, results);
+
+        Rigidbody2D own = _collider.attachedRigidbody;
+        if (own == null) return results.Count;
+
+        for (int i = results.Count - 1; i >= 0; i--)
+            if (results[i].attachedRigidbody == own) results.RemoveAt(i);
+        return results.Count;
     }
 }

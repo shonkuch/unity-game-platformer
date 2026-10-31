@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// One swing: after the hit delay, box-casts at the cast point and damages every Damageable it touches once,
-// never the player's own. Lasts the attack duration while horizontal control continues.
+// One swing: after the hit delay (the strike frame of the attack animation), plays the swing effect and box-casts at
+// the cast point, damaging every Damageable it touches once, never the player's own.
+// Lasts the attack duration while horizontal control continues.
 // Starts from Idle, Move or Fall; not from Jump, Crouch or a wall grab.
 [DisallowMultipleComponent]
 public class AttackState : MovingState
@@ -15,8 +16,9 @@ public class AttackState : MovingState
     [SerializeField] private LayerMask hitLayers = ~0;
     [Tooltip("How long (s) the attack state lasts.")]
     [SerializeField, Min(0f)] private float duration = 0.35f;
-    [Tooltip("Time (s) into the attack when the hit box is cast; clamped to the duration.")]
-    [SerializeField, Min(0f)] private float hitDelay = 0.1f;
+    [Tooltip("Time (s) into the attack animation when the strike frame shows: the swing effect plays and the hit box " +
+             "is cast. Clamped to the duration.")]
+    [SerializeField, Min(0f)] private float hitDelay = 0.1667f;
 
     private readonly List<Collider2D> _overlaps = new();
     private readonly HashSet<Damageable> _hitThisSwing = new();
@@ -50,9 +52,7 @@ public class AttackState : MovingState
         _time = 0f;
         _hasHit = false;
 
-        // Face the held direction first so the swing effect points where the hit will land.
         Controller.Face(DirectionOf(Input.MoveAxis));
-        if (Controller.Effects != null) Controller.Effects.PlayAttack(Controller.Facing);
     }
 
     protected override void UpdateMovement()
@@ -60,6 +60,7 @@ public class AttackState : MovingState
         if (!_hasHit && _time >= Mathf.Min(hitDelay, duration))
         {
             _hasHit = true;
+            if (Controller.Effects != null) Controller.Effects.PlayAttack(Controller.Facing);
             Hit();
         }
 

@@ -1,56 +1,55 @@
 using UnityEngine;
 
-public class DroneAnimationController : MonoBehaviour
+// Plays the drone's animations for its current state: Move by default, the attack animation once per shot (restarted
+// on each wind-up, see EnemyAttackState) and the explosion once on death. When the explosion ends, the visuals object
+// (sprite and body collider) is deactivated, since nothing of the drone is left.
+public class DroneAnimationController : EnemyAnimationController
 {
-    [Header("References")]
-    [Tooltip("Drag the EnemyVisuals object (or its Animator) here")]
+    [Tooltip("The EnemyVisuals Animator; found on this object or its children if empty.")]
     [SerializeField] private Animator animator;
 
-    // Const animation state names matching Animator Controller
-    private const string ANIM_MOVE = "Drone_Move";
-    private const string ANIM_ATTACK = "Drone_Attack";
-    private const string ANIM_DEATH = "Drone_Explosion";
+    private readonly int _move = Animator.StringToHash("Drone_Move");
+    private readonly int _attack = Animator.StringToHash("Drone_Attack");
+    private readonly int _death = Animator.StringToHash("Drone_Explosion");
 
-    private string currentAnimation;
+    private int _current;
+    private int _playedOnFrame = -1;
 
     private void Awake()
     {
-        // Fallback: search on this object or children only if not assigned manually
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-            if (animator == null)
-            {
-                animator = GetComponentInChildren<Animator>();
-            }
-        }
+        if (animator == null) animator = GetComponentInChildren<Animator>();
     }
 
-    // Тимчасовий метод для миттєвої перевірки при запуску гри
-    private void Start()
+    public override void PlayAnimation(EnemyStateId state, int value)
     {
-        PlayMove();
-    }
+        if (animator == null || !animator.isActiveAndEnabled) return;
 
-    /// <summary>
-    /// Call this method from EnemyController to switch animation states.
-    /// </summary>
-    public void ChangeAnimationState(string newAnimation)
-    {
-        if (animator == null)
+        if (state == EnemyStateId.Death)
         {
-            Debug.LogWarning($"[DroneAnimationController] Animator component is missing on {gameObject.name}!");
+            if (_current != _death) Play(_death);
+            else if (HasFinished(_death)) animator.gameObject.SetActive(false);
             return;
         }
 
-        if (currentAnimation == newAnimation) return;
-
-        animator.Play(newAnimation);
-        currentAnimation = newAnimation;
+        // A shot's wind-up restarts the attack animation; it plays to its end even if the state changes meanwhile.
+        if (state == EnemyStateId.Attack && value != 0) Play(_attack);
+        else if (_current != _move && (_current != _attack || HasFinished(_attack))) Play(_move);
     }
 
-    // Helper methods for easy call from state machine
-    public void PlayMove() => ChangeAnimationState(ANIM_MOVE);
-    public void PlayAttack() => ChangeAnimationState(ANIM_ATTACK);
-    public void PlayDeath() => ChangeAnimationState(ANIM_DEATH);
+    private void Play(int state)
+    {
+        animator.Play(state, 0, 0f);
+        _current = state;
+        _playedOnFrame = Time.frameCount;
+    }
+
+    // Play() only takes effect on the Animator's next update, so until then the state info still describes the
+    // previous state.
+    private bool HasFinished(int state)
+    {
+        if (Time.frameCount == _playedOnFrame) return false;
+
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        return info.shortNameHash == state && info.normalizedTime >= 1f;
+    }
 }

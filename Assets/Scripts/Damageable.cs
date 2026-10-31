@@ -18,7 +18,7 @@ public class Damageable : MonoBehaviour
     [SerializeField] private ParticleSystem hitParticles;
     [Tooltip("Optional prefab spawned on death at the sprite's center (or this object's position); outlives the object.")]
     [SerializeField] private ParticleSystem deathEffect;
-    [Tooltip("Optional; tinted on every hit.")]
+    [Tooltip("Tinted on every hit. Empty = the first SpriteRenderer of this object or its children.")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color flashColor = Color.red;
     [Tooltip("Tint strength (0 sprite's own color, 1 flash color) by time since the hit (s).")]
@@ -44,6 +44,7 @@ public class Damageable : MonoBehaviour
     private void Awake()
     {
         Hp = maxHp;
+        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (spriteRenderer != null) _baseColor = spriteRenderer.color;
     }
 
