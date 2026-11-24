@@ -3,6 +3,7 @@ using UnityEngine;
 // Reads raw keyboard state through the legacy Input Manager and exposes it to the controller.
 public class PlayerInputBinder : MonoBehaviour
 {
+    //Ускладнює життя при зборі сцені і робить лише половину стандартних речей які вміють обидві Unity-системи
     [SerializeField] private KeyCode[] leftKeys = { KeyCode.A, KeyCode.LeftArrow };
     [SerializeField] private KeyCode[] rightKeys = { KeyCode.D, KeyCode.RightArrow };
     [SerializeField] private KeyCode[] jumpKeys = { KeyCode.Space, KeyCode.W, KeyCode.UpArrow };
