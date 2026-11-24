@@ -38,7 +38,7 @@ public class AttackState : MovingState
     public override bool CanBeActivated(PlayerStateId? currentState)
     {
         if (currentState == Id) return _time < duration;
-
+        //На цьому моменті втратився сенс StateMachine 
         return Input.AttackBuffered &&
                currentState is PlayerStateId.Idle or PlayerStateId.Move or PlayerStateId.Fall;
     }

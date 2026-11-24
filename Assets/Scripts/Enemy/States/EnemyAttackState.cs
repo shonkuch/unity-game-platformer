@@ -64,6 +64,7 @@ public class EnemyAttackState : EnemyStateBase
     {
         if (projectilePrefab == null || muzzle == null) return;
 
+        //Добре було б ObjectPool
         Projectile projectile = Instantiate(projectilePrefab, muzzle.position, Quaternion.identity);
         projectile.Launch(Controller.Facing, Controller.Damageable);
         if (muzzleFlash != null) muzzleFlash.Play();
